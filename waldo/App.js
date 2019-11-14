@@ -17,3 +17,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+// Hej med dig test
