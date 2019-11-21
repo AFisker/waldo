@@ -47,7 +47,7 @@ export default function App() {
             height: '30%',
             position: 'absolute',
             bottom: -30,
-            left: 20,
+            left: 40,
           }}
           resizeMode={'contain'}
         />
@@ -58,7 +58,7 @@ export default function App() {
             height: '30%',
             position: 'absolute',
             bottom: -30,
-            right: 20,
+            right: 40,
           }}
           resizeMode={'contain'}
         />
@@ -80,25 +80,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    borderWidth: 2,
+    // borderWidth: 2,
     borderRadius: 10,
     margin: 10,
-    backgroundColor: 'lightblue',
+    // backgroundColor: 'lightblue',
     width: 80,
     height: 80,
     position: 'absolute',
     bottom: 20,
-    left: 0,
+    left: 40,
   },
   button2: {
-    borderWidth: 2,
+    // borderWidth: 2,
     borderRadius: 10,
     margin: 10,
-    backgroundColor: 'lightblue',
+    // backgroundColor: 'lightblue',
     width: 80,
     height: 80,
     position: 'absolute',
     bottom: 20,
-    right: 0,
+    right: 40,
   }
 });
