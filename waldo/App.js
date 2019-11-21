@@ -9,7 +9,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('./assets/bike.jpg')}
+        source={require('./assets/bike.png')}
         style={{
           width: '100%',
           height: '100%',
@@ -40,7 +40,8 @@ export default function App() {
           source={require('./assets/cameraButton.png')}
           style={{
             width: '30%',
-            //height: '30%',
+            height: '30%',
+            alignItems: 'center',
           }}
           resizeMode={'contain'}
         />
@@ -48,14 +49,12 @@ export default function App() {
           source={require('./assets/buttonMap.png')}
           style={{
             width: '30%',
-            //height: '30%',
+            height: '30%',
+            alignItems: 'center',
           }}
           resizeMode={'contain'}
         />
-      
-
-
-        
+        <Text style={{paddingTop: 50}}>The best Bike Finder On The Market</Text>
       {/* Indhold */}
       </ImageBackground>
     </View>
