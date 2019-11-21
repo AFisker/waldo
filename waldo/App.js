@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
+var = nisse;
