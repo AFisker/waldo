@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, Text, style, flexDirection, Button } from 'react-native';
+import { StyleSheet, View, ImageBackground, Image, Text, style, flexDirection, Button, TouchableOpacity } from 'react-native';
 
 
 export default function App() {
@@ -43,7 +43,7 @@ export default function App() {
             height: '30%',
             position: 'absolute',
             bottom: -30,
-            left: 0,
+            left: 20,
           }}
           resizeMode={'contain'}
         />
@@ -54,10 +54,14 @@ export default function App() {
             height: '30%',
             position: 'absolute',
             bottom: -30,
-            right: 0,
+            right: 20,
           }}
           resizeMode={'contain'}
         />
+          <TouchableOpacity style={styles.button} onPress={() => this.cameraPage()}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button2} onPress={() => this.mapPage()}>
+          </TouchableOpacity>
       {/* Indhold */}
       </ImageBackground>
     </View>
@@ -71,4 +75,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button: {
+    borderWidth: 2,
+    borderRadius: 10,
+    margin: 10,
+    backgroundColor: 'lightblue',
+    width: 80,
+    height: 80,
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+  },
+  button2: {
+    borderWidth: 2,
+    borderRadius: 10,
+    margin: 10,
+    backgroundColor: 'lightblue',
+    width: 80,
+    height: 80,
+    position: 'absolute',
+    bottom: 20,
+    right: 0,
+  }
 });
