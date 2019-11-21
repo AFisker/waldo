@@ -26,15 +26,19 @@ export default function App() {
           resizeMode={'contain'}
         />
 
-        <Text 
-        style={{
-          fontWeight: 'bold', 
-          color: 'white', 
-          fontSize: 20,
-          textAlign: 'center',
-          }}>
+        <View>
+          <Text 
+            style={{
+            fontWeight: 'bold', 
+            color: 'white', 
+            fontSize: 20,
+            textAlign: 'center',
+            paddingLeft: 20,
+            paddingRight: 20,
+            }}>
         Take an image of your bike when you've parked it. Open the map, when you need to find it!
-        </Text>
+          </Text>
+        </View>
 
          <Image
           source={require('./assets/camera.png')}
