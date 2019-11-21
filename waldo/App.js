@@ -3,6 +3,7 @@ import { StyleSheet, View, ImageBackground, Image, Text, style } from 'react-nat
 
 
 export default function App() {
+  
 
 
   return (
@@ -24,11 +25,22 @@ export default function App() {
           }}
           resizeMode={'contain'}
         />
+
+        <Text 
+        style={{
+          fontWeight: 'bold', 
+          color: 'white', 
+          fontSize: 20,
+          textAlign: 'center',
+          }}>
+        Take an image of your bike when you've parked it. Open the map, when you need to find it!
+        </Text>
+
          <Image
-          source={require('./assets/buttonMap.png')}
+          source={require('./assets/cameraButton.png')}
           style={{
             width: '30%',
-            height: '30%',
+            //height: '30%',
           }}
           resizeMode={'contain'}
         />
@@ -36,11 +48,14 @@ export default function App() {
           source={require('./assets/buttonMap.png')}
           style={{
             width: '30%',
-            height: '30%',
+            //height: '30%',
           }}
           resizeMode={'contain'}
         />
-        <Text style={{paddingtop: 50}}>The best Bike Finder On The Market</Text>
+      
+
+
+        
       {/* Indhold */}
       </ImageBackground>
     </View>
