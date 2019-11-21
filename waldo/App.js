@@ -35,12 +35,12 @@ export default function App() {
             textAlign: 'center',
             paddingLeft: 20,
             paddingRight: 20,
+            marginTop: -40,
             }}>
         Take an image of your bike when you've parked it. Open the map, when you need to find it!
           </Text>
         </View>
 
-      
         
           <TouchableOpacity style={styles.button} onPress={() => this.cameraPage()}>
           <Image source={require('./assets/camera.png')}  style={styles.imgbtn}/>
