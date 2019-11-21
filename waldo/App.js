@@ -13,6 +13,7 @@ export default function App() {
           width: '100%',
           height: '100%',
         }}
+        hej 
       >
         
         <Image
