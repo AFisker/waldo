@@ -42,7 +42,7 @@ export default function App() {
             width: '30%',
             height: '30%',
             position: 'absolute',
-            bottom: 0,
+            bottom: -30,
             left: 0,
           }}
           resizeMode={'contain'}
@@ -53,7 +53,7 @@ export default function App() {
             width: '30%',
             height: '30%',
             position: 'absolute',
-            bottom: 0,
+            bottom: -30,
             right: 0,
           }}
           resizeMode={'contain'}
