@@ -40,31 +40,13 @@ export default function App() {
           </Text>
         </View>
 
-         <Image
-          source={require('./assets/camera.png')}
-          style={{
-            width: '30%',
-            height: '30%',
-            position: 'absolute',
-            bottom: -30,
-            left: 40,
-          }}
-          resizeMode={'contain'}
-        />
-         <Image
-          source={require('./assets/map.png')}
-          style={{
-            width: '30%',
-            height: '30%',
-            position: 'absolute',
-            bottom: -30,
-            right: 40,
-          }}
-          resizeMode={'contain'}
-        />
+      
+        
           <TouchableOpacity style={styles.button} onPress={() => this.cameraPage()}>
+          <Image source={require('./assets/camera.png')}  style={styles.imgbtn}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button2} onPress={() => this.mapPage()}>
+          <Image source={require('./assets/map.png')}  style={styles.imgbtn}/>
           </TouchableOpacity>
       {/* Indhold */}
       </ImageBackground>
@@ -80,25 +62,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    // borderWidth: 2,
+   // borderWidth: 2,
     borderRadius: 10,
     margin: 10,
-    // backgroundColor: 'lightblue',
+   // backgroundColor: 'lightblue',
     width: 80,
     height: 80,
     position: 'absolute',
-    bottom: 20,
+    bottom: 30,
     left: 40,
   },
   button2: {
-    // borderWidth: 2,
+   // borderWidth: 2,
     borderRadius: 10,
     margin: 10,
-    // backgroundColor: 'lightblue',
+   // backgroundColor: 'lightblue',
     width: 80,
     height: 80,
     position: 'absolute',
-    bottom: 20,
+    bottom: 30,
     right: 40,
-  }
+  },
+  imgbtn: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+  
+}
 });
