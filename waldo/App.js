@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image } from 'react-native';
+import { StyleSheet, View, ImageBackground, Image, Text, style } from 'react-native';
 
 
 export default function App() {
@@ -14,6 +14,7 @@ export default function App() {
           height: '100%',
         }}
       >
+        
         <Image
           source={require('./assets/logo.png')}
           style={{
@@ -23,6 +24,23 @@ export default function App() {
           }}
           resizeMode={'contain'}
         />
+         <Image
+          source={require('./assets/buttonMap.png')}
+          style={{
+            width: '30%',
+            height: '30%',
+          }}
+          resizeMode={'contain'}
+        />
+         <Image
+          source={require('./assets/buttonMap.png')}
+          style={{
+            width: '30%',
+            height: '30%',
+          }}
+          resizeMode={'contain'}
+        />
+        <Text style={{paddingtop: 50}}>The best Bike Finder On The Market</Text>
       {/* Indhold */}
       </ImageBackground>
     </View>
