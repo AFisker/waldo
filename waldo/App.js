@@ -25,10 +25,10 @@ export default function App() {
           resizeMode={'contain'}
         />
          <Image
-          source={require('./assets/mapButton.png')}
+          source={require('./assets/cameraButton.png')}
           style={{
-            width: '20%',
-            height: '20%',
+            width: '30%',
+            height: '30%',
             position: 'absolute',
             bottom: 0,
             left: 0,
@@ -37,7 +37,7 @@ export default function App() {
           resizeMode={'contain'}
         />
          <Image
-          source={require('./assets/cameraButton.png')}
+          source={require('./assets/mapButton.png')}
           style={{
             width: '30%',
             height: '30%',
