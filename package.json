@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "lottie-react-native": "^3.3.2",
+    "styled-components": "^4.4.1"
+  }
+}

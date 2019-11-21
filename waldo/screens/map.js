@@ -41,7 +41,7 @@ export default class App extends Component {
 
   componentWillUnmount() 
   {
-    this.watchId.remove(); // stop watching for location changes
+   // if (this.watchId != 'undefined') this.watchId.remove(); // stop watching for location changes
   }
 
  AskPermission  = async () => {
