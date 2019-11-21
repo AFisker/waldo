@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, Text, style } from 'react-native';
+import { StyleSheet, View, ImageBackground, Image, Text, style, flexDirection, Button } from 'react-native';
 
 
 export default function App() {
@@ -8,7 +8,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('./assets/bike.png')}
+        source={require('./assets/bike.jpg')}
         style={{
           width: '100%',
           height: '100%',
@@ -25,20 +25,26 @@ export default function App() {
           resizeMode={'contain'}
         />
          <Image
-          source={require('./assets/buttonMap.png')}
+          source={require('./assets/mapButton.png')}
           style={{
-            width: '30%',
-            height: '30%',
-            alignItems: 'center',
+            width: '20%',
+            height: '20%',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            paddingLeft: 100,
           }}
           resizeMode={'contain'}
         />
          <Image
-          source={require('./assets/buttonMap.png')}
+          source={require('./assets/cameraButton.png')}
           style={{
             width: '30%',
             height: '30%',
-            alignItems: 'center',
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            paddingRight: 100,
           }}
           resizeMode={'contain'}
         />
