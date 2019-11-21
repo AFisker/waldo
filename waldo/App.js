@@ -5,7 +5,6 @@ import { StyleSheet, View, ImageBackground, Image, Text, style, flexDirection, B
 export default function App() {
   
 
-
   return (
     <View style={styles.container}>
       <ImageBackground
