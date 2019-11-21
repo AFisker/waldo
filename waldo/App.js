@@ -32,7 +32,6 @@ export default function App() {
             position: 'absolute',
             bottom: 0,
             left: 0,
-            paddingLeft: 100,
           }}
           resizeMode={'contain'}
         />
@@ -44,7 +43,6 @@ export default function App() {
             position: 'absolute',
             bottom: 0,
             right: 0,
-            paddingRight: 100,
           }}
           resizeMode={'contain'}
         />
