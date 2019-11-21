@@ -3,6 +3,7 @@ import { StyleSheet, View, ImageBackground, Image, Text, style, flexDirection, B
 
 
 export default function App() {
+  
 
 
   return (
@@ -24,6 +25,17 @@ export default function App() {
           }}
           resizeMode={'contain'}
         />
+
+        <Text 
+        style={{
+          fontWeight: 'bold', 
+          color: 'white', 
+          fontSize: 20,
+          textAlign: 'center',
+          }}>
+        Take an image of your bike when you've parked it. Open the map, when you need to find it!
+        </Text>
+
          <Image
           source={require('./assets/cameraButton.png')}
           style={{
