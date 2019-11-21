@@ -37,7 +37,7 @@ export default function App() {
         </Text>
 
          <Image
-          source={require('./assets/cameraButton.png')}
+          source={require('./assets/camera.png')}
           style={{
             width: '30%',
             height: '30%',
@@ -48,7 +48,7 @@ export default function App() {
           resizeMode={'contain'}
         />
          <Image
-          source={require('./assets/mapButton.png')}
+          source={require('./assets/map.png')}
           style={{
             width: '30%',
             height: '30%',
@@ -58,7 +58,6 @@ export default function App() {
           }}
           resizeMode={'contain'}
         />
-        <Text style={{paddingTop: 50}}>The best Bike Finder On The Market</Text>
       {/* Indhold */}
       </ImageBackground>
     </View>
