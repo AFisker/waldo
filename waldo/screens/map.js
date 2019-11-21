@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions  } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 
@@ -8,22 +8,21 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
 
-export default class App extends Component {
+export default class MapScreen extends Component {
   state = {
     location: null,
     errorMessage: null,
-    region: null, 
-    markers : null
+    region: null,
+    markers: null
   };
-  
-  async componentDidMount() 
-  {
+
+  async componentDidMount() {
     await this.AskPermission(); // Check that we have permission to access location data - ask if we don't 
-    this.watchId = Location.watchPositionAsync(
-      {accuray:Location.Accuracy.BestForNavigation , timeInterval:1000, distanceInterval:1,  mayShowUserSettingsDialog:true},
+    this.watchId = await Location.watchPositionAsync(
+      { accuray: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 1, mayShowUserSettingsDialog: true },
       (currentPosition) => {
         this.setState({
-          location:currentPosition,
+          location: currentPosition,
           region: {
             latitude: currentPosition.coords.latitude,
             longitude: currentPosition.coords.longitude,
@@ -31,7 +30,7 @@ export default class App extends Component {
             longitudeDelta: 0.1,
           },
           marker: {
-                  latlng :currentPosition.coords
+            latlng: currentPosition.coords
           },
           error: null,
         });
@@ -39,12 +38,13 @@ export default class App extends Component {
     );
   }
 
-  componentWillUnmount() 
-  {
-   // if (this.watchId != 'undefined') this.watchId.remove(); // stop watching for location changes
+  componentWillUnmount() {
+    // stop watching for location changes
+    if (this.watchId != undefined)
+      this.watchId.remove();
   }
 
- AskPermission  = async () => {
+  AskPermission = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     console.log('Asking for geo permission: ' + status);
     if (status !== 'granted') {
@@ -55,25 +55,25 @@ export default class App extends Component {
   };
 
   render() {
-  const {location} = this.state; // Taking location from overall state object
+    const { location } = this.state; // Taking location from overall state object
 
     let text = 'Venter på mine koordinater ..';
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
     } else if (this.state.location) {
-      text = "timestamp:"+location.timestamp + "\n"+ " Længdegrad: " + location.coords.longitude + "\n" +" Breddegrad: " + location.coords.latitude;
+      text = "timestamp:" + location.timestamp + "\n" + " Længdegrad: " + location.coords.longitude + "\n" + " Breddegrad: " + location.coords.latitude;
     }
 
     return (
       <View style={styles.container}>
 
-      <Text style={styles.paragraph}>Hvor skal man gå hen i dag ....</Text>
+        <Text style={styles.paragraph}>Hvor skal man gå hen i dag ....</Text>
 
-      {this.state.region ? 
-      ( <MapView style={styles.mapStyle}   region={this.state.region} >
-            <Marker  coordinate={this.state.marker.latlng} title ='Tomasok' description = 'På vej igen ..' pinColor = 'gold'/>
-       </MapView> )
-        : null}
+        {this.state.region ?
+          (<MapView style={styles.mapStyle} region={this.state.region} >
+            <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='gold' />
+          </MapView>)
+          : null}
 
         <Text style={styles.paragraph}>{text}</Text>
 
@@ -98,6 +98,6 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height*2/3,
+    height: Dimensions.get('window').height * 2 / 3,
   },
 });

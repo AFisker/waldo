@@ -4,17 +4,16 @@ import { StyleSheet, View, ImageBackground, Image, Text, style, flexDirection, B
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import home from './screens/home';
-import camera from './screens/camera';
-import map from './screens/map';
+import HomeScreen from './screens/home';
+import CameraScreen from './screens/camera';
+import MapScreen from './screens/map';
 
 
-
-const AppNavigator = createStackNavigator (
+const AppNavigator = createStackNavigator(
   {
-    homescreen : home,
-    camerascreen : camera,
-    mapscreen : map
+    homescreen: HomeScreen,
+    camerascreen: CameraScreen,
+    mapscreen: MapScreen
   },
   {
     initialRouteName: 'homescreen'
@@ -26,8 +25,8 @@ const AppContainer = createAppContainer(AppNavigator);
 
 
 export default class App extends React.Component {
-  
+
   render() {
-  return <AppContainer/>;
+    return <AppContainer />;
   }
 }
