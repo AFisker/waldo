@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
-import mapViewdirections
+// import mapViewdirections
 
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
@@ -100,6 +100,6 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height, // * 4/5,
+    height: Dimensions.get('window').height, // * 4 / 5,
   },
 });
