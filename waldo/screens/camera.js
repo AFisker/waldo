@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import { FontAwesome, Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
-
+import * as ImagePicker from 'expo-image-picker';
+import {Platform} from 'react-native';
 
 
 <FontAwesome
@@ -18,11 +19,38 @@ export default class CameraScreen extends React.Component {
     type: Camera.Constants.Type.back,
   }
 
-  async componentDidMount() {
+  /*async componentDidMount() {
+
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasPermission: status === 'granted' });
-  }
+  }*/
 
+  async componentDidMount() {
+    this.getPermissionAsync()
+  }  
+  getPermissionAsync = async () => {
+      // Camera roll Permission 
+      if (Platform.OS === 'ios') {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+      // Camera Permission
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      this.setState({ hasPermission: status === 'granted' });
+    }
+
+  takePicture = async () => {
+    if (this.camera) {
+      let photo = await this.camera.takePictureAsync();
+    }
+  }
+  pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    });
+  }
   render(){
     const { hasPermission } = this.state
     if (hasPermission === null) {
@@ -33,42 +61,40 @@ export default class CameraScreen extends React.Component {
       return (
          
            
-            <View style={{flex:1, flexDirection:"row",justifyContent:"space-between",margin:20}}>
-            <Camera style={{ flex: 1 }} type={this.state.cameraType}>
+            <View style={{flex:1, flexDirection:"row",justifyContent:"space-between"}}>
+            <Camera   ref={ref => {this.camera = ref}} 
+                      style={{ flex: 1 }} type={this.state.cameraType}>
               <TouchableOpacity
                 style={{
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                  backgroundColor: 'transparent',                  
-                }}>
+                  //alignSelf: 'flex-end',
+                  //alignItems: 'center',
+                  backgroundColor: 'transparent',  
+                  position: 'absolute',
+                  bottom: 50,
+                  left: 50 
+                }}
+                onPress={this.pickImage}>
                 <Ionicons
                     name="ios-photos"
-                    style={{ color: "#fff", fontSize: 40, position: 'absolute', bottom: 0, left: 0,}}
+                    style={{ color: "#fff", fontSize: 40}}
                   
                 />
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
+                  alignSelf: 'center',
+                 // alignItems: 'center',
                   backgroundColor: 'transparent',
-                }}>
+                  position: 'absolute',
+                  bottom: 50
+                }}
+                onPress={this.takePicture}>
                 <FontAwesome
                     name="camera"
                     style={{ color: "#fff", fontSize: 40}}
                 />
               </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                  backgroundColor: 'transparent',
-                }}>
-                <MaterialCommunityIcons
-                    name="camera-switch"
-                    style={{ color: "#fff", fontSize: 40}}
-                />
-              </TouchableOpacity>
+
             </Camera>
         </View>
         
