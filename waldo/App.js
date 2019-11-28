@@ -10,14 +10,18 @@ import MapScreen from './screens/map';
 
 
 const AppNavigator = createStackNavigator(
+  
   {
     homescreen: HomeScreen,
     camerascreen: CameraScreen,
     mapscreen: MapScreen
   },
   {
-    initialRouteName: 'homescreen'
+    initialRouteName: 'homescreen',
+    header: null,
+    headerMode: 'none'//fjerner header på alle skærme, når det står sådan her! dvs. at det også fjerner den indfødte "back" knap der følger med map API'en
   }
+
 );
 
 const AppContainer = createAppContainer(AppNavigator);

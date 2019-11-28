@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
+import mapViewdirections
 
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
@@ -67,22 +68,23 @@ export default class MapScreen extends Component {
     return (
       <View style={styles.container}>
 
-        <Text style={styles.paragraph}>Hvor skal man gå hen i dag ....</Text>
+        
 
         {this.state.region ?
           (<MapView style={styles.mapStyle} region={this.state.region} >
             <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='gold' />
+            
           </MapView>)
           : null}
 
-        <Text style={styles.paragraph}>{text}</Text>
+       
 
       </View>
     );
   }
 
 }
-// ******************************************************
+// **** ***<Text style={styles.paragraph}>Hvor skal man gå hen i dag ....</Text>*************<Text style={styles.paragraph}>{text}</Text>**********************************
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -98,6 +100,6 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height * 2 / 3,
+    height: Dimensions.get('window').height, // * 4/5,
   },
 });
