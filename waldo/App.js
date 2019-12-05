@@ -7,7 +7,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './screens/home';
 import CameraScreen from './screens/camera';
 import MapScreen from './screens/map';
-import Showimage from './showimage/image';
+import ShowImage from './screens/image';
 
 
 const AppNavigator = createStackNavigator(
@@ -16,7 +16,7 @@ const AppNavigator = createStackNavigator(
     homescreen: HomeScreen,
     camerascreen: CameraScreen,
     mapscreen: MapScreen,
-    showimage: Showimage,
+    showimage: ShowImage,
   },
   {
     initialRouteName: 'homescreen',

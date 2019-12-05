@@ -62,12 +62,8 @@ export default class CameraScreen extends React.Component {
       this.props.navigation.navigate("map");
       console.log(this.state.imageUri)
     };
-
-    navigateToImage()
-
-    
-
-  render(){
+  
+  render() {
     const { hasPermission } = this.state
     if (hasPermission === null) {
       return <View />;
@@ -75,7 +71,6 @@ export default class CameraScreen extends React.Component {
       return <Text>No access to camera</Text>;
     } else {
       return (
-         
            
             <View style={{flex:1, flexDirection:"row",justifyContent:"space-between"}}>
             <Camera   ref={ref => {this.camera = ref}} 

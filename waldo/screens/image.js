@@ -6,7 +6,7 @@ import {
   Platform,
 } from 'react-native';
 
-export default class App extends React.Component {
+export default class ShowImage extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView

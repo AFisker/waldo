@@ -71,7 +71,7 @@ export default class MapScreen extends Component {
         
 
         {this.state.region ?
-          (<MapView style={styles.mapStyle} region={this.state.region} >
+          (<MapView style={styles.mapStyle} initialregion={this.state.region} >
             <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='gold' />
             
           </MapView>)
