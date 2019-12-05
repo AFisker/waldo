@@ -62,6 +62,17 @@ export default class CameraScreen extends React.Component {
       this.props.navigation.navigate("map");
       console.log(this.state.imageUri)
     };
+    
+    currentImage = async () => {
+      const currentImage = this.state.currentImage;
+      try {
+        const value = await AsyncStorage.getItem('imageUri');
+        if (value !== null) return 1;
+        else return 0;
+      } catch (e) {
+        return -1;
+      }
+    }
   
   render() {
     const { hasPermission } = this.state
