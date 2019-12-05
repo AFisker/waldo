@@ -5,6 +5,8 @@ import * as Permissions from 'expo-permissions';
 import { FontAwesome, Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import {Platform} from 'react-native';
+import {AsyncStorage} from 'react-native';
+
 
 
 <FontAwesome
@@ -41,16 +43,30 @@ export default class CameraScreen extends React.Component {
       this.setState({ hasPermission: status === 'granted' });
     }
 
-  takePicture = async () => {
-    if (this.camera) {
-      let photo = await this.camera.takePictureAsync();
-    }
-  }
-  pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    });
-  }
+    takePicture = async () => {
+      try {
+        const imageData = await this.camera.takePictureAsync({
+          fixOrientation: true
+        });
+        this.setState({
+          imageUri: imageData.uri
+        });
+        this._saveImageAsync();
+      } catch (err) {
+        console.log("err: ", err);
+      }
+    };
+  
+    _saveImageAsync = async () => {
+      await AsyncStorage.setItem("imageUri", this.state.imageUri);
+      this.props.navigation.navigate("map");
+      console.log(this.state.imageUri)
+    };
+
+    navigateToImage()
+
+    
+
   render(){
     const { hasPermission } = this.state
     if (hasPermission === null) {
@@ -66,29 +82,14 @@ export default class CameraScreen extends React.Component {
                       style={{ flex: 1 }} type={this.state.cameraType}>
               <TouchableOpacity
                 style={{
-                  //alignSelf: 'flex-end',
-                  //alignItems: 'center',
-                  backgroundColor: 'transparent',  
-                  position: 'absolute',
-                  bottom: 50,
-                  left: 50 
-                }}
-                onPress={this.pickImage}>
-                <Ionicons
-                    name="ios-photos"
-                    style={{ color: "#fff", fontSize: 40}}
-                  
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
                   alignSelf: 'center',
                  // alignItems: 'center',
                   backgroundColor: 'transparent',
                   position: 'absolute',
                   bottom: 50
                 }}
-                onPress={this.takePicture}>
+                onPress= {() => { this.takePicture(); this.navigateToImage();}}>
+                  
                 <FontAwesome
                     name="camera"
                     style={{ color: "#fff", fontSize: 40}}
