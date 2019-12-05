@@ -51,7 +51,7 @@ export default class CameraScreen extends React.Component {
         this.setState({
           imageUri: imageData.uri
         });
-        this._saveImageAsync();
+        await this._saveImageAsync();
       } catch (err) {
         console.log("err: ", err);
       }
@@ -59,20 +59,11 @@ export default class CameraScreen extends React.Component {
   
     _saveImageAsync = async () => {
       await AsyncStorage.setItem("imageUri", this.state.imageUri);
-      this.props.navigation.navigate("map");
+      this.props.navigation.navigate('showimage');
+      // this.props.navigation.navigate("map"); viker ikke
       console.log(this.state.imageUri)
     };
-    
-    currentImage = async () => {
-      const currentImage = this.state.currentImage;
-      try {
-        const value = await AsyncStorage.getItem('imageUri');
-        if (value !== null) return 1;
-        else return 0;
-      } catch (e) {
-        return -1;
-      }
-    }
+
   
   render() {
     const { hasPermission } = this.state
@@ -94,7 +85,7 @@ export default class CameraScreen extends React.Component {
                   position: 'absolute',
                   bottom: 50
                 }}
-                onPress= {() => { this.takePicture(); this.props.navigation.navigate('showimage');}}>
+                onPress= {() => { this.takePicture();}}>
                   
                 <FontAwesome
                     name="camera"
