@@ -88,7 +88,7 @@ export default class CameraScreen extends React.Component {
                   position: 'absolute',
                   bottom: 50
                 }}
-                onPress= {() => { this.takePicture(); this.navigateToImage();}}>
+                onPress= {() => { this.takePicture(); this.props.navigation.navigate('showimage');}}>
                   
                 <FontAwesome
                     name="camera"
