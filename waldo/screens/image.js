@@ -42,11 +42,48 @@ export default class ShowImage extends React.Component {
   render() {
     return (
       <View>
-        {this.state.imageURI !== null && <Image source={{ uri: this.state.imageURI }} style={{width:300,height:300}}/>}
+        {this.state.imageURI !== null && <Image source={{ uri: this.state.imageURI }} style={{width:"100%",height:"100%"}}/>}
       </View>
     );
   }
+  
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    button: {
+      // borderWidth: 2,
+      borderRadius: 10,
+      margin: 10,
+      // backgroundColor: 'lightblue',
+      width: 80,
+      height: 80,
+      position: 'absolute',
+      bottom: 30,
+      left: 40,
+    },
+    button2: {
+      // borderWidth: 2,
+      borderRadius: 10,
+      margin: 10,
+      // backgroundColor: 'lightblue',
+      width: 80,
+      height: 80,
+      position: 'absolute',
+      bottom: 30,
+      right: 40,
+    },
+    imgbtn: {
+      justifyContent: 'center',
+      alignSelf: 'center',
+  
+    }
+  });
 
 // add imageStyle, text and buttons.
 // Denne side skal kopieres så den kan poppe op når brugeren har fundet sin cykel.
