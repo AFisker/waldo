@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   StyleSheet,
-  style,
+  Style,
+  TouchableOpacity,
   View,
   Image,
   Text,
@@ -41,9 +42,24 @@ export default class ShowImage extends React.Component {
 
   render() {
     return (
-      <View>
+      
+      
+      <View> 
         {this.state.imageURI !== null && <Image source={{ uri: this.state.imageURI }} style={{width:"100%",height:"100%"}}/>}
+        
+        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('camerascreen')}>
+        <Text style={styles.text}>NO</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button2} onPress={() => this.props.navigation.navigate('mapscreen')}>
+        <Text style={styles.text}t>Yes</Text>
+        </TouchableOpacity>
+
       </View>
+
+    
+      
+      
+
     );
   }
   
@@ -57,32 +73,47 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     button: {
-      // borderWidth: 2,
+      borderWidth: 1,
+      borderColor: 'white',
       borderRadius: 10,
       margin: 10,
-      // backgroundColor: 'lightblue',
+      backgroundColor: 'red',
       width: 80,
-      height: 80,
+      height: 50,
       position: 'absolute',
       bottom: 30,
       left: 40,
     },
     button2: {
-      // borderWidth: 2,
+      borderWidth: 1,
+      borderColor: 'white',
       borderRadius: 10,
       margin: 10,
-      // backgroundColor: 'lightblue',
+      backgroundColor: 'green',
       width: 80,
-      height: 80,
+      height: 50,
       position: 'absolute',
       bottom: 30,
       right: 40,
     },
-    imgbtn: {
+    header: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 24,
+        color: 'white',
+    
+      },
+    text: {
       justifyContent: 'center',
       alignSelf: 'center',
+      flexDirection: 'row',
+      fontWeight: 'bold',
+      fontSize: 18,
+      marginTop: '15%',
+      color: 'white',
   
-    }
+    },
+
   });
 
 // add imageStyle, text and buttons.
