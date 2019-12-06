@@ -47,3 +47,6 @@ export default class ShowImage extends React.Component {
     );
   }
 }
+
+// add imageStyle, text and buttons.
+// Denne side skal kopieres så den kan poppe op når brugeren har fundet sin cykel.
