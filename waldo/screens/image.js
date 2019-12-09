@@ -40,13 +40,20 @@ export default class ShowImage extends React.Component {
 
  }
 
+
+
   render() {
     return (
       
       
-      <View> 
+      <View>   
+
         {this.state.imageURI !== null && <Image source={{ uri: this.state.imageURI }} style={{width:"100%",height:"100%"}}/>}
-        
+
+        <TouchableOpacity style={styles.button3} onPress={() => this.props.navigation.navigate('camerascreen')}>
+        <Text style={styles.header}>Are You Satisfied With Your Image?</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('camerascreen')}>
         <Text style={styles.text}>NO</Text>
         </TouchableOpacity>
@@ -96,11 +103,27 @@ const styles = StyleSheet.create({
       bottom: 30,
       right: 40,
     },
+    button3: {
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 10,
+        margin: 10,
+        backgroundColor: 'rgba(255, 241, 113, 0.7)',
+        width: 280,
+        height: 80,
+        position: 'absolute',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginTop: 370,
+      },
     header: {
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 24,
-        color: 'white',
+        justifyContent: 'center',
+      alignSelf: 'center',
+      flexDirection: 'row',
+      fontWeight: 'bold',
+      fontSize: 22,
+      // marginTop: '15%',
+      color: 'white',
     
       },
     text: {
