@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import { FontAwesome, Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
 import {Platform} from 'react-native';
 import {AsyncStorage} from 'react-native';
-
+import * as Location from 'expo-location';
 
 
 <FontAwesome
@@ -18,7 +18,7 @@ export default class CameraScreen extends React.Component {
   state = {
     hasPermission: null,
     type: Camera.Constants.Type.back,
-      location: null,
+      Location: null,
       errorMessage: null,
       region: null,
       markers: null
@@ -46,6 +46,31 @@ export default class CameraScreen extends React.Component {
       this.setState({ hasPermission: status === 'granted' });
     }
 
+    getBikeLocation = async () => {
+      await this.AskPermission();
+      let bikeLocation = await Location.getCurrentPositionAsync();
+              this.setState({
+                Location: bikeLocation,
+                region: {
+                  latitude: bikeLocation.coords.latitude,
+                  longitude: bikeLocation.coords.longitude,
+                  latitudeDelta: 0.1,
+                  longitudeDelta: 0.1,
+                },
+                marker: {
+                  latlng: bikeLocation.coords
+                },
+            }
+              );
+              await this._saveLocation();
+              console.log(bikeLocation);
+            };
+
+        _saveLocation = async () => {
+          await AsyncStorage.setItem("bikeLocation", JSON.stringify(this.state.Location));
+          console.log(this.state.Location)
+        };
+
     takePicture = async () => {
       try {
         const imageData = await this.camera.takePictureAsync({
@@ -58,29 +83,6 @@ export default class CameraScreen extends React.Component {
       } catch (err) {
         console.log("err: ", err);
       }
-    };
-
-    getLocation = async () => {
-      await this.AskPermission();
-      this.watchId = await Location.watchPositionAsync(
-        { accuray: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 1, mayShowUserSettingsDialog: true },
-        (currentPosition) => {
-          this.setState({
-            location: currentPosition,
-            region: {
-              latitude: currentPosition.coords.latitude,
-              longitude: currentPosition.coords.longitude,
-              latitudeDelta: 0.1,
-              longitudeDelta: 0.1,
-            },
-            marker: {
-              latlng: currentPosition.coords
-            },
-            error: null,
-          });
-          console.log();
-        }
-      );
     };
   
     _saveImageAsync = async () => {
@@ -100,7 +102,6 @@ export default class CameraScreen extends React.Component {
       }
     };
 
-  
   render() {
     const { hasPermission } = this.state
     if (hasPermission === null) {
@@ -121,14 +122,16 @@ export default class CameraScreen extends React.Component {
                   position: 'absolute',
                   bottom: 50
                 }}
-                onPress= {() => { this.takePicture(); this.getLocation();}}>
+                onPress= {() => { this.takePicture(); this.getBikeLocation();}}>
                   
                 <FontAwesome
                     name="camera"
                     style={{ color: "#fff", fontSize: 40}}
                 />
               </TouchableOpacity>
-
+              <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
+             <Image source={require('../assets/homeLogo.png')} style={styles.imgbtn} />
+           </TouchableOpacity>
             </Camera>
         </View>
         
@@ -145,5 +148,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#0ff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    // borderWidth: 2,
+    borderRadius: 10,
+    margin: 10,
+    //backgroundColor: 'lightgrey',
+    width: 65,
+    height: 65,
+    position: 'absolute',
+    top: 35,
+    right: 25,
+    justifyContent: 'center',
+  },
+  imgbtn: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 65,
+    height: 52,
   },
 });
