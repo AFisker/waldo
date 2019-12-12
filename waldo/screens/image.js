@@ -40,8 +40,6 @@ export default class ShowImage extends React.Component {
 
  }
 
-
-
   render() {
     return (
       
@@ -50,10 +48,9 @@ export default class ShowImage extends React.Component {
 
         {this.state.imageURI !== null && <Image source={{ uri: this.state.imageURI }} style={{width:"100%",height:"100%"}}/>}
 
-        <TouchableOpacity style={styles.button3} onPress={() => this.props.navigation.navigate('camerascreen')}>
+        <View style={styles.textBox}>
         <Text style={styles.header}>Are You Satisfied With Your Image?</Text>
-        </TouchableOpacity>
-
+        </View>
         <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('camerascreen')}>
         <Text style={styles.text}>NO</Text>
         </TouchableOpacity>
@@ -62,10 +59,6 @@ export default class ShowImage extends React.Component {
         </TouchableOpacity>
 
       </View>
-
-    
-      
-      
 
     );
   }
@@ -103,7 +96,7 @@ const styles = StyleSheet.create({
       bottom: 30,
       right: 40,
     },
-    button3: {
+    textBox: {
         borderWidth: 1,
         borderColor: 'white',
         borderRadius: 10,
@@ -138,6 +131,3 @@ const styles = StyleSheet.create({
     },
 
   });
-
-// add imageStyle, text and buttons.
-// Denne side skal kopieres så den kan poppe op når brugeren har fundet sin cykel.
