@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import { FontAwesome, Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 import {Platform} from 'react-native';
+import {AsyncStorage} from 'react-native';
+import * as Location from 'expo-location';
 
 
 <FontAwesome
@@ -17,7 +18,11 @@ export default class CameraScreen extends React.Component {
   state = {
     hasPermission: null,
     type: Camera.Constants.Type.back,
-  }
+      Location: null,
+      errorMessage: null,
+      region: null,
+      markers: null
+    };
 
   /*async componentDidMount() {
 
@@ -41,17 +46,63 @@ export default class CameraScreen extends React.Component {
       this.setState({ hasPermission: status === 'granted' });
     }
 
-  takePicture = async () => {
-    if (this.camera) {
-      let photo = await this.camera.takePictureAsync();
-    }
-  }
-  pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    });
-  }
-  render(){
+    getBikeLocation = async () => {
+      await this.AskPermission();
+      let bikeLocation = await Location.getCurrentPositionAsync();
+              this.setState({
+                Location: bikeLocation,
+                region: {
+                  latitude: bikeLocation.coords.latitude,
+                  longitude: bikeLocation.coords.longitude,
+                  latitudeDelta: 0.1,
+                  longitudeDelta: 0.1,
+                },
+                marker: {
+                  latlng: bikeLocation.coords
+                },
+            }
+              );
+              await this._saveLocation();
+              console.log(bikeLocation);
+            };
+
+        _saveLocation = async () => {
+          await AsyncStorage.setItem("bikeLocation", JSON.stringify(this.state.Location));
+          console.log(this.state.Location)
+        };
+
+    takePicture = async () => {
+      try {
+        const imageData = await this.camera.takePictureAsync({
+          fixOrientation: true
+        });
+        this.setState({
+          imageUri: imageData.uri
+        });
+        await this._saveImageAsync();
+      } catch (err) {
+        console.log("err: ", err);
+      }
+    };
+  
+    _saveImageAsync = async () => {
+      await AsyncStorage.setItem("imageUri", this.state.imageUri);
+      this.props.navigation.navigate('showimage');
+      // this.props.navigation.navigate("map"); viker ikke
+      console.log(this.state.imageUri)
+    };
+
+    AskPermission = async () => {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      console.log('Asking for geo permission: ' + status);
+      if (status !== 'granted') {
+        this.setState({
+          errorMessage: 'Permission to access location was denied',
+        });
+      }
+    };
+
+  render() {
     const { hasPermission } = this.state
     if (hasPermission === null) {
       return <View />;
@@ -59,27 +110,10 @@ export default class CameraScreen extends React.Component {
       return <Text>No access to camera</Text>;
     } else {
       return (
-         
            
             <View style={{flex:1, flexDirection:"row",justifyContent:"space-between"}}>
             <Camera   ref={ref => {this.camera = ref}} 
                       style={{ flex: 1 }} type={this.state.cameraType}>
-              <TouchableOpacity
-                style={{
-                  //alignSelf: 'flex-end',
-                  //alignItems: 'center',
-                  backgroundColor: 'transparent',  
-                  position: 'absolute',
-                  bottom: 50,
-                  left: 50 
-                }}
-                onPress={this.pickImage}>
-                <Ionicons
-                    name="ios-photos"
-                    style={{ color: "#fff", fontSize: 40}}
-                  
-                />
-              </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   alignSelf: 'center',
@@ -88,13 +122,16 @@ export default class CameraScreen extends React.Component {
                   position: 'absolute',
                   bottom: 50
                 }}
-                onPress={this.takePicture}>
+                onPress= {() => { this.takePicture(); this.getBikeLocation();}}>
+                  
                 <FontAwesome
                     name="camera"
                     style={{ color: "#fff", fontSize: 40}}
                 />
               </TouchableOpacity>
-
+              <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
+             <Image source={require('../assets/homeLogo.png')} style={styles.imgbtn} />
+           </TouchableOpacity>
             </Camera>
         </View>
         
@@ -111,5 +148,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#0ff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    // borderWidth: 2,
+    borderRadius: 10,
+    margin: 10,
+    //backgroundColor: 'lightgrey',
+    width: 65,
+    height: 65,
+    position: 'absolute',
+    top: 35,
+    right: 25,
+    justifyContent: 'center',
+  },
+  imgbtn: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 65,
+    height: 52,
   },
 });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 // import mapViewdirections
@@ -7,6 +7,7 @@ import MapView, { Marker } from 'react-native-maps';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+
 
 
 export default class MapScreen extends Component {
@@ -50,7 +51,7 @@ export default class MapScreen extends Component {
     console.log('Asking for geo permission: ' + status);
     if (status !== 'granted') {
       this.setState({
-        errorMessage: 'Permission to access location was denied',
+        errorMessage: 'In order to make the app functional, permission to use the camera is required',
       });
     }
   };
@@ -71,13 +72,15 @@ export default class MapScreen extends Component {
         
 
         {this.state.region ?
-          (<MapView style={styles.mapStyle} region={this.state.region} >
-            <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='gold' />
-            
+          (<MapView style={styles.mapStyle} initialregion={this.state.region} >
+            <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='gold' /> 
           </MapView>)
+         
           : null}
+    <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
+             <Image source={require('../assets/homeLogo.png')} style={styles.imgbtn} />
+           </TouchableOpacity>
 
-       
 
       </View>
     );
@@ -101,5 +104,23 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height, // * 4 / 5,
+  },
+  button: {
+    // borderWidth: 2,
+    borderRadius: 10,
+    margin: 10,
+    //backgroundColor: 'lightgrey',
+    width: 65,
+    height: 65,
+    position: 'absolute',
+    top: 35,
+    right: 25,
+    justifyContent: 'center',
+  },
+  imgbtn: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 65,
+    height: 52,
   },
 });
