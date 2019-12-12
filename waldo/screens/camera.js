@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import { FontAwesome, Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
@@ -129,7 +129,9 @@ export default class CameraScreen extends React.Component {
                     style={{ color: "#fff", fontSize: 40}}
                 />
               </TouchableOpacity>
-
+              <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
+             <Image source={require('../assets/homeLogo.png')} style={styles.imgbtn} />
+           </TouchableOpacity>
             </Camera>
         </View>
         
@@ -146,5 +148,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#0ff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    // borderWidth: 2,
+    borderRadius: 10,
+    margin: 10,
+    //backgroundColor: 'lightgrey',
+    width: 65,
+    height: 65,
+    position: 'absolute',
+    top: 35,
+    right: 25,
+    justifyContent: 'center',
+  },
+  imgbtn: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 65,
+    height: 52,
   },
 });
