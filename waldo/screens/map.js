@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
 
 import MapView, { Marker } from 'react-native-maps';
 // import mapViewdirections
@@ -7,8 +7,6 @@ import MapView, { Marker } from 'react-native-maps';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-
-
 
 export default class MapScreen extends Component {
   state = {
@@ -18,7 +16,30 @@ export default class MapScreen extends Component {
     markers: null
   };
 
+  myBikeLocation = async () => {
+    const bikeLocation = this.state.bikeLocation;
+    try {
+      const value = await AsyncStorage.getItem("bikeLocation");
+      console.log(value);
+      if (value !== null) {
+        this.setState({
+          bikeLocation : value,
+          marker2: {
+            latlng: this.state.bikelocation.coords.latlng,
+          },
+          });
+          console.log(this.state.marker2.latlng);
+        return 1;
+        }
+      else return 0;
+    } catch (e) {
+      return -1;
+    }
+  }
+  
+
   async componentDidMount() {
+    let succeeded = await this.myBikeLocation();
     await this.AskPermission(); // Check that we have permission to access location data - ask if we don't 
     this.watchId = await Location.watchPositionAsync(
       { accuray: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 1, mayShowUserSettingsDialog: true },
@@ -39,7 +60,7 @@ export default class MapScreen extends Component {
       }
     );
   }
-
+  
   componentWillUnmount() {
     // stop watching for location changes
     if (this.watchId != undefined)
@@ -72,8 +93,9 @@ export default class MapScreen extends Component {
         
 
         {this.state.region ?
-          (<MapView style={styles.mapStyle} initialregion={this.state.region} >
+          (<MapView style={styles.mapStyle} initialRegion={this.state.region} >
             <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='gold' /> 
+            <Marker coordinate={this.state.marker2.latlng} title='Tomasok' description='På vej igen ..' pinColor='black' /> 
           </MapView>)
          
           : null}
@@ -87,6 +109,7 @@ export default class MapScreen extends Component {
   }
 
 }
+
 // **** ***<Text style={styles.paragraph}>Hvor skal man gå hen i dag ....</Text>*************<Text style={styles.paragraph}>{text}</Text>**********************************
 const styles = StyleSheet.create({
   container: {
