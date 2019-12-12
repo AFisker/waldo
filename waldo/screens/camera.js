@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import { FontAwesome, Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 import {Platform} from 'react-native';
 import {AsyncStorage} from 'react-native';
 
@@ -19,7 +18,11 @@ export default class CameraScreen extends React.Component {
   state = {
     hasPermission: null,
     type: Camera.Constants.Type.back,
-  }
+      location: null,
+      errorMessage: null,
+      region: null,
+      markers: null
+    };
 
   /*async componentDidMount() {
 
@@ -56,12 +59,45 @@ export default class CameraScreen extends React.Component {
         console.log("err: ", err);
       }
     };
+
+    getLocation = async () => {
+      await this.AskPermission();
+      this.watchId = await Location.watchPositionAsync(
+        { accuray: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 1, mayShowUserSettingsDialog: true },
+        (currentPosition) => {
+          this.setState({
+            location: currentPosition,
+            region: {
+              latitude: currentPosition.coords.latitude,
+              longitude: currentPosition.coords.longitude,
+              latitudeDelta: 0.1,
+              longitudeDelta: 0.1,
+            },
+            marker: {
+              latlng: currentPosition.coords
+            },
+            error: null,
+          });
+          console.log();
+        }
+      );
+    };
   
     _saveImageAsync = async () => {
       await AsyncStorage.setItem("imageUri", this.state.imageUri);
       this.props.navigation.navigate('showimage');
       // this.props.navigation.navigate("map"); viker ikke
       console.log(this.state.imageUri)
+    };
+
+    AskPermission = async () => {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      console.log('Asking for geo permission: ' + status);
+      if (status !== 'granted') {
+        this.setState({
+          errorMessage: 'Permission to access location was denied',
+        });
+      }
     };
 
   
@@ -85,7 +121,7 @@ export default class CameraScreen extends React.Component {
                   position: 'absolute',
                   bottom: 50
                 }}
-                onPress= {() => { this.takePicture();}}>
+                onPress= {() => { this.takePicture(); this.getLocation();}}>
                   
                 <FontAwesome
                     name="camera"
