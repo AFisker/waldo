@@ -100,7 +100,7 @@ export default class MapScreen extends Component {
          
           : null}
     <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
-             <Image source={require('../assets/homeLogo.png')} style={styles.imgbtn} />
+             <Image source={require('../assets/homebtn.png')} style={styles.imgbtn} />
            </TouchableOpacity>
 
 
@@ -129,21 +129,22 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height, // * 4 / 5,
   },
   button: {
-    // borderWidth: 2,
-    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'white',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    width: 75,
+    height: 75,
+    borderRadius: 150,
     margin: 10,
-    //backgroundColor: 'lightgrey',
-    width: 65,
-    height: 65,
     position: 'absolute',
     top: 35,
-    right: 25,
+    left: 25,
     justifyContent: 'center',
   },
   imgbtn: {
     justifyContent: 'center',
     alignSelf: 'center',
-    width: 65,
-    height: 52,
+    width: 55,
+    height: 42,
   },
 });

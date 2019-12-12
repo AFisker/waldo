@@ -1,8 +1,8 @@
-import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, Text, TouchableOpacity } from 'react-native';
-
-
+import React, { useState, UseEffect } from 'react';
+import { StyleSheet, View, ImageBackground, Image, Text, TouchableOpacity, NativeModules } from 'react-native';
+import Animation from './animation'
 export default class HomeScreen extends React.Component {
+static navigationOptions;
 
   render() {
     return (
@@ -24,26 +24,16 @@ export default class HomeScreen extends React.Component {
             resizeMode={'contain'}
           />
 
-          <View>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'white',
-                fontSize: 20,
-                textAlign: 'center',
-                paddingLeft: 20,
-                paddingRight: 20,
-                marginTop: -40,
-              }}>
-              Take an image of your bike when you've parked it. Open the map, when you need to find it!
-              </Text>
-          </View>
+
+          <Animation>
+          
+          </Animation>
 
           <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('camerascreen')}>
-            <Image source={require('../assets/camera.png')} style={styles.imgbtn} />
+            <Image source={require('../assets/cam.png')} style={styles.imgbtn1} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button2} onPress={() => this.props.navigation.navigate('mapscreen')}>
-            <Image source={require('../assets/map.png')} style={styles.imgbtn} />
+            <Image source={require('../assets/newmap.png')} style={styles.imgbtn2} />
           </TouchableOpacity>
 
         </ImageBackground>
@@ -60,30 +50,46 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    // borderWidth: 2,
-    borderRadius: 10,
+    borderRadius: 150,
     margin: 10,
-    // backgroundColor: 'lightblue',
-    width: 80,
-    height: 80,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    width: 75,
+    height: 75,
     position: 'absolute',
     bottom: 30,
     left: 40,
+    borderWidth: 1,
+    borderColor: 'white',
+    left: 65,
   },
   button2: {
-    // borderWidth: 2,
-    borderRadius: 10,
+    borderRadius: 150,
     margin: 10,
-    // backgroundColor: 'lightblue',
-    width: 80,
-    height: 80,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    width: 75,
+    height: 75,
     position: 'absolute',
     bottom: 30,
     right: 40,
+    borderWidth: 1,
+    borderColor: 'white',
+    right: 65,
   },
-  imgbtn: {
+  imgbtn1: {
     justifyContent: 'center',
     alignSelf: 'center',
+    width: 50,
+    height: 40,
+    marginTop: 15,
+
+  },
+
+  imgbtn2: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 42,
+    height: 44,
+    marginTop: 15,
 
   }
 });
