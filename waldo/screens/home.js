@@ -1,8 +1,8 @@
-import React from 'react';
-import { StyleSheet, View, ImageBackground, Image, Text, TouchableOpacity } from 'react-native';
-
-
+import React, { useState, UseEffect } from 'react';
+import { StyleSheet, View, ImageBackground, Image, Text, TouchableOpacity, NativeModules } from 'react-native';
+import Animation from './animation'
 export default class HomeScreen extends React.Component {
+static navigationOptions;
 
   render() {
     return (
@@ -24,20 +24,10 @@ export default class HomeScreen extends React.Component {
             resizeMode={'contain'}
           />
 
-          <View>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'white',
-                fontSize: 20,
-                textAlign: 'center',
-                paddingLeft: 20,
-                paddingRight: 20,
-                marginTop: -40,
-              }}>
-              Take an image of your bike when you've parked it. Open the map, when you need to find it!
-              </Text>
-          </View>
+
+          <Animation>
+          
+          </Animation>
 
           <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('camerascreen')}>
             <Image source={require('../assets/camera.png')} style={styles.imgbtn} />
