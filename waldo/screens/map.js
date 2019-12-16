@@ -13,22 +13,19 @@ export default class MapScreen extends Component {
     location: null,
     errorMessage: null,
     region: null,
-    markers: null
+    markers: null,
+    marker2: null,
   };
 
   myBikeLocation = async () => {
-    const bikeLocation = this.state.bikeLocation;
     try {
       const value = await AsyncStorage.getItem("bikeLocation");
-      console.log(value);
+      // console.log(value);
       if (value !== null) {
         this.setState({
-          bikeLocation : value,
-          marker2: {
-            latlng: this.state.bikelocation.coords.latlng,
-          },
+          bikeLocation : JSON.parse(value),
           });
-          console.log(this.state.marker2.latlng);
+          // console.log(this.state.bikeLocation);
         return 1;
         }
       else return 0;
@@ -36,7 +33,6 @@ export default class MapScreen extends Component {
       return -1;
     }
   }
-  
 
   async componentDidMount() {
     let succeeded = await this.myBikeLocation();
@@ -90,12 +86,11 @@ export default class MapScreen extends Component {
     return (
       <View style={styles.container}>
 
-        
 
         {this.state.region ?
           (<MapView style={styles.mapStyle} initialRegion={this.state.region} >
-            <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='gold' /> 
-            <Marker coordinate={this.state.marker2.latlng} title='Tomasok' description='På vej igen ..' pinColor='black' /> 
+            <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='white' /> 
+            <Marker coordinate= {this.state.bikeLocation.coords} title='Tomasok' description='På vej igen ..' pinColor='red' /> 
           </MapView>)
          
           : null}
