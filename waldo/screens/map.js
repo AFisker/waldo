@@ -14,7 +14,6 @@ export default class MapScreen extends Component {
     errorMessage: null,
     region: null,
     markers: null,
-    marker2: null,
   };
 
   myBikeLocation = async () => {
@@ -89,8 +88,8 @@ export default class MapScreen extends Component {
 
         {this.state.region ?
           (<MapView style={styles.mapStyle} initialRegion={this.state.region} >
-            <Marker coordinate={this.state.marker.latlng} title='Tomasok' description='På vej igen ..' pinColor='white' /> 
-            <Marker coordinate= {this.state.bikeLocation.coords} title='Tomasok' description='På vej igen ..' pinColor='red' /> 
+            <Marker coordinate={this.state.marker.latlng} title='You' description='Lokation' pinColor='white' /> 
+            <Marker coordinate= {this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' /> 
           </MapView>)
          
           : null}
