@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
-
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Circle, Marker } from 'react-native-maps';
 // import mapViewdirections
 
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import * as geolib from 'geolib';
 
 export default class MapScreen extends Component {
   state = {
@@ -14,17 +14,17 @@ export default class MapScreen extends Component {
     errorMessage: null,
     region: null,
     markers: null,
+    compareLocation: null,
   };
 
   myBikeLocation = async () => {
+    // Fetching bikeLocation
     try {
       const value = await AsyncStorage.getItem("bikeLocation");
-      // console.log(value);
       if (value !== null) {
         this.setState({
-          bikeLocation : JSON.parse(value),
+          bikeLocation : JSON.parse(value), // Transforming the local data into a useable objekt
           });
-          // console.log(this.state.bikeLocation);
         return 1;
         }
       else return 0;
@@ -47,11 +47,17 @@ export default class MapScreen extends Component {
             latitudeDelta: 0.1,
             longitudeDelta: 0.1,
           },
+          compareLocation: geolib.isPointWithinRadius(
+            { latitude: currentPosition.coords.latitude, longitude: currentPosition.coords.longitude },
+            { latitude: this.state.bikeLocation.coords.latitude, longitude: this.state.bikeLocation.coords.longitude },
+            10 
+          ),
           marker: {
             latlng: currentPosition.coords
           },
           error: null,
         });
+        console.log(this.state.compareLocation);
       }
     );
   }
@@ -60,6 +66,7 @@ export default class MapScreen extends Component {
     // stop watching for location changes
     if (this.watchId != undefined)
       this.watchId.remove();
+      
   }
 
   AskPermission = async () => {
@@ -73,23 +80,19 @@ export default class MapScreen extends Component {
   };
 
   render() {
-    const { location } = this.state; // Taking location from overall state object
-
-    let text = 'Venter på mine koordinater ..';
-    if (this.state.errorMessage) {
-      text = this.state.errorMessage;
-    } else if (this.state.location) {
-      text = "timestamp:" + location.timestamp + "\n" + " Længdegrad: " + location.coords.longitude + "\n" + " Breddegrad: " + location.coords.latitude;
-    }
 
     return (
+      
+      
       <View style={styles.container}>
 
-
         {this.state.region ?
-          (<MapView style={styles.mapStyle} initialRegion={this.state.region} >
-            <Marker coordinate={this.state.marker.latlng} title='You' description='Lokation' pinColor='white' /> 
-            <Marker coordinate= {this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' /> 
+          (<MapView showsUserLocation style={styles.mapStyle} initialRegion={this.state.region} >
+            <Marker coordinate= {this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' />
+            <Circle center= {this.state.bikeLocation.coords} 
+                    radius= "10"
+                    strokeWidth={1} 
+                    fillColor="grey"/>
           </MapView>)
          
           : null}
