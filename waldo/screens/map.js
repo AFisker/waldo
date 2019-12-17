@@ -81,26 +81,27 @@ export default class MapScreen extends Component {
 
   render() {
 
-    if (this.state.compare === true) 
-    return () => this.props.navigation.navigate('imagescreen'); else
+  //  if (this.state.compare === true) 
+   // return () => this.props.navigation.navigate('imagescreen'); else
     return (  
       
       <View style={styles.container}>
 
         {this.state.region ?
           (<MapView showsUserLocation style={styles.mapStyle} initialRegion={this.state.region} >
-            <Marker coordinate= {this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' />
-            <Circle center= {this.state.bikeLocation.coords} 
-                    radius= "10"
-                    strokeWidth={1} 
-                    fillColor="grey"/>
+            <MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' > 
+            <Image source={require('../assets/bikeMarker.png')} style={{ width: 45, height: 50.5 }} />
+            </MapView.Marker>
+         
           </MapView>)
          
           : null}
-    <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
+    <TouchableOpacity style={styles.myPosition} onPress={() => this.props.MapView.initialRegion}>
+             <Image source={require('../assets/myPosition.png')} style={styles.imgbtn2} />
+           </TouchableOpacity>
+           <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
              <Image source={require('../assets/homebtn.png')} style={styles.imgbtn} />
            </TouchableOpacity>
-
 
       </View>
     );
@@ -139,10 +140,28 @@ const styles = StyleSheet.create({
     left: 25,
     justifyContent: 'center',
   },
+  myPosition: {
+    borderWidth: 1,
+    width: 25,
+    height: 25,
+    borderRadius: 150,
+    margin: 10,
+    position: 'absolute',
+    bottom: 25,
+    right: 25 ,
+    justifyContent: 'center',
+
+  },
   imgbtn: {
     justifyContent: 'center',
     alignSelf: 'center',
     width: 55,
     height: 42,
+  },
+  imgbtn2: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: 30,
+    height: 30,
   },
 });
