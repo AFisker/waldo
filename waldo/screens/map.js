@@ -81,8 +81,9 @@ export default class MapScreen extends Component {
 
   render() {
 
-    return (
-      
+    if (this.state.compare === true) 
+    return () => this.props.navigation.navigate('imagescreen'); else
+    return (  
       
       <View style={styles.container}>
 
