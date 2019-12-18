@@ -40,6 +40,11 @@ export default class BikeFound extends React.Component {
 
   }
 
+  pressYes = async () => {
+    await AsyncStorage.multiRemove(['bikeLocation','imageUri'])
+    this.props.navigation.navigate('homescreen');
+  }
+
   render() {
     return (
 
@@ -49,12 +54,12 @@ export default class BikeFound extends React.Component {
         {this.state.imageURI !== null && <Image source={{ uri: this.state.imageURI }} style={{ width: "100%", height: "100%" }} />}
 
         <View style={styles.textBox}>
-          <Text style={styles.header}>Is this your bike?</Text>
+          <Text style={styles.header}>Found Your Bike??</Text>
         </View>
-        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('camerascreen')}>
+        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('mapscreen')}>
           <Image source={require('../assets/down.png')} style={styles.imgbtn1} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2} onPress={() => this.props.navigation.navigate('mapscreen')}>
+        <TouchableOpacity style={styles.button2} onPress={this.pressYes}>
           <Image source={require('../assets/up.png')} style={styles.imgbtn2} />
         </TouchableOpacity>
 

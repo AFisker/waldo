@@ -27,7 +27,12 @@ export default class MapScreen extends Component {
         });
         return 1;
       }
-      else return 0;
+      else {
+        this.setState({
+          bikeLocation: null,
+        });
+        return 0;
+      }
     } catch (e) {
       return -1;
     }
@@ -47,23 +52,20 @@ export default class MapScreen extends Component {
             latitudeDelta: 0.1,
             longitudeDelta: 0.1,
           },
-          compareLocation: geolib.isPointWithinRadius(
+          compareLocation: succeeded == 1 ? geolib.isPointWithinRadius(
             { latitude: currentPosition.coords.latitude, longitude: currentPosition.coords.longitude },
             { latitude: this.state.bikeLocation.coords.latitude, longitude: this.state.bikeLocation.coords.longitude },
             10
-          ),
+          ) : false,
           marker: {
             latlng: currentPosition.coords
           },
           error: null,
         });
 
-        console.log(this.state.compareLocation);
         if (this.state.compareLocation === true) {
-          console.log('navigating away');
-          this.props.navigation.navigate('showimage');
+          this.props.navigation.navigate('bikefound');
         }
-
       }
     );
   }
@@ -93,10 +95,11 @@ export default class MapScreen extends Component {
 
         {this.state.region ?
           (<MapView showsUserLocation style={styles.mapStyle} initialRegion={this.state.region} >
-            <MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' >
-              <Image source={require('../assets/bikeMarker.png')} style={{ width: 45, height: 50.5 }} />
-            </MapView.Marker>
-
+            {this.state.bikeLocation ?
+              (<MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' >
+                <Image source={require('../assets/bikeMarker.png')} style={{ width: 45, height: 50.5 }} />
+              </MapView.Marker>)
+              : null}
           </MapView>)
 
           : null}
