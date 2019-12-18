@@ -1,5 +1,5 @@
 import React, { useState, UseEffect } from 'react';
-import { StyleSheet, View, ImageBackground, Image, Text, TouchableOpacity, NativeModules } from 'react-native';
+import { StyleSheet, View, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Animation from './animation'
 export default class HomeScreen extends React.Component {
 static navigationOptions;

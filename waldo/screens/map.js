@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Image, StyleSheet, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
 import MapView, { Circle, Marker } from 'react-native-maps';
 import Toast from 'react-native-simple-toast';
 // import mapViewdirections
@@ -12,7 +12,7 @@ import * as geolib from 'geolib';
 import BikeFound from './bikeFound';
 
 const closeRadius = 5; // 10
-const farRadius = closeRadius; // 15
+const farRadius   = 8; // 15
 
 export default class MapScreen extends Component {
   state = {
@@ -67,7 +67,9 @@ export default class MapScreen extends Component {
           farRadius
         ) : null;
 
-        const showBikeFound = hasBikeLocation && within;
+        const showBikeFound = hasBikeLocation && (
+          !farAway && (within)
+        );
 
         const showToast = // show toast if
           !this.state.showToast // it wasn't shown in previous state
@@ -84,6 +86,8 @@ export default class MapScreen extends Component {
           },
           showBikeFound: showBikeFound,
           showToast: showToast,
+          isClose: within,
+          isFar: farAway,
           marker: {
             latlng: currentPosition.coords
           },

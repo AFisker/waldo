@@ -1,13 +1,10 @@
 import React from 'react';
 import {
   StyleSheet,
-  Style,
   TouchableOpacity,
   View,
   Image,
   Text,
-  KeyboardAvoidingView,
-  Platform,
   AsyncStorage,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
