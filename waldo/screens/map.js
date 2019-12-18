@@ -11,6 +11,8 @@ import * as geolib from 'geolib';
 
 import BikeFound from './bikeFound';
 
+const closeRadius = 5; // 10
+const farRadius = closeRadius; // 15
 
 export default class MapScreen extends Component {
   state = {
@@ -51,23 +53,24 @@ export default class MapScreen extends Component {
       { accuray: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 1, mayShowUserSettingsDialog: true },
       (currentPosition) => {
 
+        const distance = geolib.getDistance(this.state.bikeLocation.coords, currentPosition.coords);
+
         const within = hasBikeLocation ? geolib.isPointWithinRadius(
           currentPosition.coords,
           this.state.bikeLocation.coords,
-          // 10
-          5
+          closeRadius
         ) : null;
 
         const farAway = hasBikeLocation ? !geolib.isPointWithinRadius(
           currentPosition.coords,
           this.state.bikeLocation.coords,
-          // 15
-          5
+          farRadius
         ) : null;
 
         const showBikeFound = hasBikeLocation && within;
+
         const showToast = // show toast if
-          !this.state.showToast // it wasn't show in previous state
+          !this.state.showToast // it wasn't shown in previous state
           && this.state.showBikeFound // and we're coming from the BikeFound view
           && !showBikeFound; // and we're showing the map again
 
@@ -86,7 +89,7 @@ export default class MapScreen extends Component {
           },
           error: null,
         });
-        console.log('map:: comparing location (geo fencing)   far=' + (farAway ? 'Y' : 'N') + '   close=' + (within ? 'Y' : 'N'));
+        console.log('map:: comparing location (geo fencing)   far=' + (farAway ? 'Y' : 'N') + '   close=' + (within ? 'Y' : 'N') + '    dist=' + distance);
       }
     );
   }
@@ -111,11 +114,9 @@ export default class MapScreen extends Component {
 
     const { showBikeFound, showToast } = this.state;
 
-    if (showToast)
-    {
-    Toast.show('This is a toast.');
+    if (showToast) {
+      Toast.showWithGravity("Nope, you're too far now.", Toast.LONG, Toast.TOP);
     }
-      
 
     return showBikeFound ? (
       <BikeFound navigation={this.props.navigation} />
