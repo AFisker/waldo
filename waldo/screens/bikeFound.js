@@ -54,9 +54,9 @@ export default class BikeFound extends React.Component {
         <View style={styles.textBox}>
           <Text style={styles.header}>Found Your Bike??</Text>
         </View>
-        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('mapscreen')}>
+        {/* <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('mapscreen')}>
           <Image source={require('../assets/down.png')} style={styles.imgbtn1} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.button2} onPress={this.pressYes}>
           <Image source={require('../assets/up.png')} style={styles.imgbtn2} />
         </TouchableOpacity>

@@ -8,7 +8,6 @@ import HomeScreen from './screens/home';
 import CameraScreen from './screens/camera';
 import MapScreen from './screens/map';
 import ShowImage from './screens/image';
-import BikeFound from './screens/bikeFound';
 
 const AppNavigator = createStackNavigator(
   
@@ -17,7 +16,6 @@ const AppNavigator = createStackNavigator(
     camerascreen: CameraScreen,
     mapscreen: MapScreen,
     showimage: ShowImage,
-    bikefound: BikeFound,
   },
   {
     initialRouteName: 'homescreen',

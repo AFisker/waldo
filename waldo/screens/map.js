@@ -8,13 +8,17 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import * as geolib from 'geolib';
 
+import BikeFound from './bikeFound';
+
+
 export default class MapScreen extends Component {
   state = {
     location: null,
     errorMessage: null,
     region: null,
     markers: null,
-    compareLocation: null,
+    isWithinRadius: null,
+    isFarFromBike: null,
   };
 
   myBikeLocation = async () => {
@@ -52,19 +56,29 @@ export default class MapScreen extends Component {
             latitudeDelta: 0.1,
             longitudeDelta: 0.1,
           },
-          compareLocation: succeeded == 1 ? geolib.isPointWithinRadius(
+          isWithinRadius: succeeded == 1 ? geolib.isPointWithinRadius(
             { latitude: currentPosition.coords.latitude, longitude: currentPosition.coords.longitude },
             { latitude: this.state.bikeLocation.coords.latitude, longitude: this.state.bikeLocation.coords.longitude },
             10
-          ) : false,
+          ) : null,
+          isFarFromBike: succeeded == 1 ? !geolib.isPointWithinRadius(
+            { latitude: currentPosition.coords.latitude, longitude: currentPosition.coords.longitude },
+            { latitude: this.state.bikeLocation.coords.latitude, longitude: this.state.bikeLocation.coords.longitude },
+            // 15
+            5
+          ) : null,
           marker: {
             latlng: currentPosition.coords
           },
           error: null,
         });
+        console.log('map:: comparing location (geo fencing)');
 
-        if (this.state.compareLocation === true) {
-          this.props.navigation.navigate('bikefound');
+        if (this.state.isWithinRadius === true) {
+          console.log('map:: is within radius');
+        }
+        if (this.state.isFarFromBike === true) {
+          console.log('map:: is far from bike');
         }
       }
     );
@@ -74,7 +88,6 @@ export default class MapScreen extends Component {
     // stop watching for location changes
     if (this.watchId != undefined)
       this.watchId.remove();
-
   }
 
   AskPermission = async () => {
@@ -89,10 +102,13 @@ export default class MapScreen extends Component {
 
   render() {
 
-    return (
+    const {isWithinRadius, isFarFromBike} = this.state;
 
+    return isWithinRadius ? (
+      <BikeFound>
+      </BikeFound>
+    ) : (
       <View style={styles.container}>
-
         {this.state.region ?
           (<MapView showsUserLocation style={styles.mapStyle} initialRegion={this.state.region} >
             {this.state.bikeLocation ?
@@ -111,8 +127,8 @@ export default class MapScreen extends Component {
         </TouchableOpacity>
 
       </View>
-    );
-  }
+  );
+}
 
 }
 
