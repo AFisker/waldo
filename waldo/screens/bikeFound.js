@@ -23,7 +23,6 @@ export default class BikeFound extends React.Component {
     //const currentImage = this.state.currentImage;
     try {
       const value = await AsyncStorage.getItem('imageUri');
-      console.log(value);
       if (value !== null) {
         this.setState({ imageURI: value });
         return 1;
@@ -47,7 +46,6 @@ export default class BikeFound extends React.Component {
 
   render() {
     return (
-
 
       <View>
 
