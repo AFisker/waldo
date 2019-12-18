@@ -54,7 +54,7 @@ export default class ShowImage extends React.Component {
         <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('camerascreen')}>
           <Image source={require('../assets/down.png')} style={styles.imgbtn1} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2} onPress={() => this.props.navigation.navigate('mapscreen')}>
+        <TouchableOpacity style={styles.button2} onPress={() => this.props.navigation.navigate('homescreen')}>
           <Image source={require('../assets/up.png')} style={styles.imgbtn2} />
         </TouchableOpacity>
 

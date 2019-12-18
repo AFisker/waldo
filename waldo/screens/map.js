@@ -23,10 +23,10 @@ export default class MapScreen extends Component {
       const value = await AsyncStorage.getItem("bikeLocation");
       if (value !== null) {
         this.setState({
-          bikeLocation : JSON.parse(value), // Transforming the local data into a useable objekt
-          });
+          bikeLocation: JSON.parse(value), // Transforming the local data into a useable objekt
+        });
         return 1;
-        }
+      }
       else return 0;
     } catch (e) {
       return -1;
@@ -50,23 +50,29 @@ export default class MapScreen extends Component {
           compareLocation: geolib.isPointWithinRadius(
             { latitude: currentPosition.coords.latitude, longitude: currentPosition.coords.longitude },
             { latitude: this.state.bikeLocation.coords.latitude, longitude: this.state.bikeLocation.coords.longitude },
-            10 
+            10
           ),
           marker: {
             latlng: currentPosition.coords
           },
           error: null,
         });
+
         console.log(this.state.compareLocation);
+        if (this.state.compareLocation === true) {
+          console.log('navigating away');
+          this.props.navigation.navigate('showimage');
+        }
+
       }
     );
   }
-  
+
   componentWillUnmount() {
     // stop watching for location changes
     if (this.watchId != undefined)
       this.watchId.remove();
-      
+
   }
 
   AskPermission = async () => {
@@ -81,27 +87,25 @@ export default class MapScreen extends Component {
 
   render() {
 
-  //  if (this.state.compare === true) 
-   // return () => this.props.navigation.navigate('imagescreen'); else
-    return (  
-      
+    return (
+
       <View style={styles.container}>
 
         {this.state.region ?
           (<MapView showsUserLocation style={styles.mapStyle} initialRegion={this.state.region} >
-            <MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' > 
-            <Image source={require('../assets/bikeMarker.png')} style={{ width: 45, height: 50.5 }} />
+            <MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' >
+              <Image source={require('../assets/bikeMarker.png')} style={{ width: 45, height: 50.5 }} />
             </MapView.Marker>
-         
+
           </MapView>)
-         
+
           : null}
-    <TouchableOpacity style={styles.myPosition} onPress={() => this.props.MapView.initialRegion}>
-             <Image source={require('../assets/myPosition.png')} style={styles.imgbtn2} />
-           </TouchableOpacity>
-           <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
-             <Image source={require('../assets/homebtn.png')} style={styles.imgbtn} />
-           </TouchableOpacity>
+        <TouchableOpacity style={styles.myPosition} onPress={() => this.props.MapView.initialRegion}>
+          <Image source={require('../assets/myPosition.png')} style={styles.imgbtn2} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
+          <Image source={require('../assets/homebtn.png')} style={styles.imgbtn} />
+        </TouchableOpacity>
 
       </View>
     );
@@ -148,7 +152,7 @@ const styles = StyleSheet.create({
     margin: 10,
     position: 'absolute',
     bottom: 25,
-    right: 25 ,
+    right: 25,
     justifyContent: 'center',
 
   },
