@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
 import MapView, { Circle, Marker } from 'react-native-maps';
+import Toast from 'react-native-simple-toast';
 // import mapViewdirections
 
 import Constants from 'expo-constants';
@@ -111,7 +112,10 @@ export default class MapScreen extends Component {
     const { showBikeFound, showToast } = this.state;
 
     if (showToast)
-      console.log("TODO: Show toast.");
+    {
+    Toast.show('This is a toast.');
+    }
+      
 
     return showBikeFound ? (
       <BikeFound navigation={this.props.navigation} />
