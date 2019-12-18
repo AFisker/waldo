@@ -114,7 +114,7 @@ export default class MapScreen extends Component {
       console.log("TODO: Show toast.");
 
     return showBikeFound ? (
-      <BikeFound />
+      <BikeFound navigation={this.props.navigation} />
     ) : (
         <View style={styles.container}>
           {this.state.region ?
