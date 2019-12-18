@@ -29,25 +29,47 @@ export default class MapScreen extends Component {
         this.setState({
           bikeLocation: JSON.parse(value), // Transforming the local data into a useable objekt
         });
-        return 1;
+        return true;
       }
       else {
         this.setState({
           bikeLocation: null,
         });
-        return 0;
+        return false;
       }
     } catch (e) {
-      return -1;
+      return false;
     }
   }
 
   async componentDidMount() {
-    let succeeded = await this.myBikeLocation();
+    const hasBikeLocation = await this.myBikeLocation();
+
     await this.AskPermission(); // Check that we have permission to access location data - ask if we don't 
     this.watchId = await Location.watchPositionAsync(
       { accuray: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 1, mayShowUserSettingsDialog: true },
       (currentPosition) => {
+
+        const within = hasBikeLocation ? geolib.isPointWithinRadius(
+          currentPosition.coords,
+          this.state.bikeLocation.coords,
+          // 10
+          5
+        ) : null;
+
+        const farAway = hasBikeLocation ? !geolib.isPointWithinRadius(
+          currentPosition.coords,
+          this.state.bikeLocation.coords,
+          // 15
+          5
+        ) : null;
+
+        const showBikeFound = hasBikeLocation && within;
+        const showToast = // show toast if
+          !this.state.showToast // it wasn't show in previous state
+          && this.state.showBikeFound // and we're coming from the BikeFound view
+          && !showBikeFound; // and we're showing the map again
+
         this.setState({
           location: currentPosition,
           region: {
@@ -56,30 +78,14 @@ export default class MapScreen extends Component {
             latitudeDelta: 0.1,
             longitudeDelta: 0.1,
           },
-          isWithinRadius: succeeded == 1 ? geolib.isPointWithinRadius(
-            { latitude: currentPosition.coords.latitude, longitude: currentPosition.coords.longitude },
-            { latitude: this.state.bikeLocation.coords.latitude, longitude: this.state.bikeLocation.coords.longitude },
-            10
-          ) : null,
-          isFarFromBike: succeeded == 1 ? !geolib.isPointWithinRadius(
-            { latitude: currentPosition.coords.latitude, longitude: currentPosition.coords.longitude },
-            { latitude: this.state.bikeLocation.coords.latitude, longitude: this.state.bikeLocation.coords.longitude },
-            // 15
-            5
-          ) : null,
+          showBikeFound: showBikeFound,
+          showToast: showToast,
           marker: {
             latlng: currentPosition.coords
           },
           error: null,
         });
-        console.log('map:: comparing location (geo fencing)');
-
-        if (this.state.isWithinRadius === true) {
-          console.log('map:: is within radius');
-        }
-        if (this.state.isFarFromBike === true) {
-          console.log('map:: is far from bike');
-        }
+        console.log('map:: comparing location (geo fencing)   far=' + (farAway ? 'Y' : 'N') + '   close=' + (within ? 'Y' : 'N'));
       }
     );
   }
@@ -102,33 +108,35 @@ export default class MapScreen extends Component {
 
   render() {
 
-    const {isWithinRadius, isFarFromBike} = this.state;
+    const { showBikeFound, showToast } = this.state;
 
-    return isWithinRadius ? (
-      <BikeFound>
-      </BikeFound>
+    if (showToast)
+      console.log("TODO: Show toast.");
+
+    return showBikeFound ? (
+      <BikeFound />
     ) : (
-      <View style={styles.container}>
-        {this.state.region ?
-          (<MapView showsUserLocation style={styles.mapStyle} initialRegion={this.state.region} >
-            {this.state.bikeLocation ?
-              (<MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' >
-                <Image source={require('../assets/bikeMarker.png')} style={{ width: 45, height: 50.5 }} />
-              </MapView.Marker>)
-              : null}
-          </MapView>)
+        <View style={styles.container}>
+          {this.state.region ?
+            (<MapView showsUserLocation style={styles.mapStyle} initialRegion={this.state.region} >
+              {this.state.bikeLocation ?
+                (<MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' >
+                  <Image source={require('../assets/bikeMarker.png')} style={{ width: 45, height: 50.5 }} />
+                </MapView.Marker>)
+                : null}
+            </MapView>)
 
-          : null}
-        <TouchableOpacity style={styles.myPosition} onPress={() => this.props.MapView.initialRegion}>
-          <Image source={require('../assets/myPosition.png')} style={styles.imgbtn2} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
-          <Image source={require('../assets/homebtn.png')} style={styles.imgbtn} />
-        </TouchableOpacity>
+            : null}
+          <TouchableOpacity style={styles.myPosition} onPress={() => this.props.MapView.initialRegion}>
+            <Image source={require('../assets/myPosition.png')} style={styles.imgbtn2} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
+            <Image source={require('../assets/homebtn.png')} style={styles.imgbtn} />
+          </TouchableOpacity>
 
-      </View>
-  );
-}
+        </View>
+      );
+  }
 
 }
 
