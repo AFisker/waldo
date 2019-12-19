@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Image,
-  Text,
-  AsyncStorage,
-} from 'react-native';
+import { StyleSheet,TouchableOpacity,View,Image,Text,AsyncStorage } from 'react-native';
 import Toast from 'react-native-simple-toast';
 
 export default class ShowImage extends React.Component {
@@ -18,7 +11,6 @@ export default class ShowImage extends React.Component {
   }
 
   currentImage = async () => {
-    //const currentImage = this.state.currentImage;
     try {
       const value = await AsyncStorage.getItem('imageUri');
       console.log(value);

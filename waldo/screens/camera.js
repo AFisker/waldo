@@ -24,11 +24,6 @@ export default class CameraScreen extends React.Component {
       markers: null
     };
 
-  /*async componentDidMount() {
-
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasPermission: status === 'granted' });
-  }*/
 
   async componentDidMount() {
     this.getPermissionAsync()
@@ -88,7 +83,6 @@ export default class CameraScreen extends React.Component {
     _saveImageAsync = async () => {
       await AsyncStorage.setItem("imageUri", this.state.imageUri);
       this.props.navigation.navigate('showimage');
-      // this.props.navigation.navigate("map"); viker ikke
       console.log(this.state.imageUri)
     };
 
@@ -117,7 +111,6 @@ export default class CameraScreen extends React.Component {
               <TouchableOpacity
                 style={{
                   alignSelf: 'center',
-                 // alignItems: 'center',
                   backgroundColor: 'transparent',
                   position: 'absolute',
                   bottom: 50
