@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
 import MapView from 'react-native-maps';
-import Toast from 'react-native-simple-toast';
+// import Toast from 'react-native-simple-toast';
 // import mapViewdirections
 
 import Constants from 'expo-constants';
@@ -12,7 +12,7 @@ import * as geolib from 'geolib';
 import BikeFound from './bikeFound';
 
 const closeRadius = 10;
-const farRadius   = 15;
+const farRadius   = 20;
 
 export default class MapScreen extends Component {
   state = {
@@ -70,10 +70,10 @@ export default class MapScreen extends Component {
           !farAway && (within)
         );
 
-        const showToast = // show toast if
-          !this.state.showToast // it wasn't shown in previous state
-          && this.state.showBikeFound // and we're coming from the BikeFound view
-          && !showBikeFound; // and we're showing the map again
+        // const showToast = // show toast if
+          //  !this.state.showToast // it wasn't shown in previous state
+          // && this.state.showBikeFound // and we're coming from the BikeFound view
+          // && !showBikeFound; // and we're showing the map again
 
         this.setState({
           location: currentPosition,
@@ -84,7 +84,7 @@ export default class MapScreen extends Component {
             longitudeDelta: 0.1,
           },
           showBikeFound: showBikeFound,
-          showToast: showToast,
+          // showToast: showToast,
           isClose: within,
           isFar: farAway,
           marker: {
@@ -116,9 +116,9 @@ export default class MapScreen extends Component {
 
     const { showBikeFound, showToast } = this.state;
 
-    if (showToast) {
-      Toast.showWithGravity("Nope, you're too far now.", Toast.LONG, Toast.TOP);
-    }
+    //if (showToast) {
+    //  Toast.showWithGravity("Nope, you're too far now.", Toast.LONG, Toast.TOP);
+    // }
 
     return showBikeFound ? (
       <BikeFound navigation={this.props.navigation} />

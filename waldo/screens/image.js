@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet,TouchableOpacity,View,Image,Text,AsyncStorage } from 'react-native';
-import Toast from 'react-native-simple-toast';
+// import Toast from 'react-native-simple-toast';
 
 export default class ShowImage extends React.Component {
   constructor(props) {
@@ -45,7 +45,7 @@ export default class ShowImage extends React.Component {
           <Image source={require('../assets/down.png')} style={styles.imgbtn1} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button2} onPress={() => {
-          Toast.showWithGravity('Bike Location Saved', Toast.LONG, Toast.TOP);
+          // Toast.showWithGravity('Bike Location Saved', Toast.LONG, Toast.TOP);
           this.props.navigation.navigate('homescreen')
         }}>
           <Image source={require('../assets/up.png')} style={styles.imgbtn2} />
