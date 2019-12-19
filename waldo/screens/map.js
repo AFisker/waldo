@@ -52,8 +52,7 @@ export default class MapScreen extends Component {
     this.watchId = await Location.watchPositionAsync(
       { accuray: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 1, mayShowUserSettingsDialog: true },
       (currentPosition) => {
-
-        const distance = geolib.getDistance(this.state.bikeLocation.coords, currentPosition.coords);
+        const distance = this.state.bikeLocation === null ? 0 : geolib.getDistance(this.state.bikeLocation.coords, currentPosition.coords);
 
         const within = hasBikeLocation ? geolib.isPointWithinRadius(
           currentPosition.coords,
@@ -129,16 +128,16 @@ export default class MapScreen extends Component {
           {this.state.region ?
             (<MapView showsUserLocation style={styles.mapStyle} initialRegion={this.state.region} >
               {this.state.bikeLocation ?
-                (<MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' pinColor='red' >
+                (<MapView.Marker coordinate={this.state.bikeLocation.coords} title='Mybike' description='Find Waldo' >
                   <Image source={require('../assets/bikeMarker.png')} style={{ width: 45, height: 50.5 }} />
                 </MapView.Marker>)
                 : null}
             </MapView>)
-
             : null}
-          <TouchableOpacity style={styles.myPosition} onPress={() => this.props.MapView.initialRegion}>
-            <Image source={require('../assets/myPosition.png')} style={styles.imgbtn2} />
-          </TouchableOpacity>
+
+          {<TouchableOpacity style={styles.myPosition}> 
+            <Image source={require('../assets/myPosition.png')} style={styles.imgbtn2}/>
+          </TouchableOpacity>}
           <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('homescreen')}>
             <Image source={require('../assets/homebtn.png')} style={styles.imgbtn} />
           </TouchableOpacity>
@@ -149,7 +148,7 @@ export default class MapScreen extends Component {
 
 }
 
-// **** ***<Text style={styles.paragraph}>Hvor skal man gå hen i dag ....</Text>*************<Text style={styles.paragraph}>{text}</Text>**********************************
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
