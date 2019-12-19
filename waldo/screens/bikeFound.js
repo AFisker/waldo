@@ -45,7 +45,7 @@ export default class BikeFound extends React.Component {
           <Text style={styles.header}>Thumbs Up, When You've Found Your Bike!</Text>
         </View>
         <TouchableOpacity style={styles.button}>
-          <Image source={require('../assets/arrow.png')} style={styles.imgbtn1} />
+          <Image source={require('../assets/kompas.png')} style={styles.imgbtn1} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button2} onPress={this.pressYes}>
           <Image source={require('../assets/up.png')} style={styles.imgbtn2} />
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   imgbtn1: {
     justifyContent: 'center',
     alignSelf: 'center',
-    height: 50,
+    height: 55,
     width: 55,
     marginTop: 12,
 

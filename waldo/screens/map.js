@@ -147,10 +147,6 @@ export default class MapScreen extends Component {
 
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 15e5d7b5ad625e3e58f9eb9cdaddfbb460989ef2
 const styles = StyleSheet.create({
   container: {
     flex: 1,
