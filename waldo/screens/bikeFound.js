@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Image,
-  Text,
-  AsyncStorage,
-} from 'react-native';
+import { StyleSheet,TouchableOpacity,View,Image,Text,AsyncStorage } from 'react-native';
 
 export default class BikeFound extends React.Component {
   constructor(props) {
@@ -49,7 +42,7 @@ export default class BikeFound extends React.Component {
         {this.state.imageURI !== null && <Image source={{ uri: this.state.imageURI }} style={{ width: "100%", height: "100%" }} />}
 
         <View style={styles.textBox}>
-          <Text style={styles.header}>Thumbs Up, if You've Found Your Bike!</Text>
+          <Text style={styles.header}>Thumbs Up, When You've Found Your Bike!</Text>
         </View>
         <TouchableOpacity style={styles.button}>
           <Image source={require('../assets/arrow.png')} style={styles.imgbtn1} />

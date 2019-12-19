@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
-import MapView, { Circle, Marker } from 'react-native-maps';
+import MapView from 'react-native-maps';
 import Toast from 'react-native-simple-toast';
 // import mapViewdirections
 
@@ -11,8 +11,8 @@ import * as geolib from 'geolib';
 
 import BikeFound from './bikeFound';
 
-const closeRadius = 5; // 10
-const farRadius   = 8; // 15
+const closeRadius = 10;
+const farRadius   = 15;
 
 export default class MapScreen extends Component {
   state = {
@@ -98,7 +98,6 @@ export default class MapScreen extends Component {
   }
 
   componentWillUnmount() {
-    // stop watching for location changes
     if (this.watchId != undefined)
       this.watchId.remove();
   }
@@ -148,7 +147,10 @@ export default class MapScreen extends Component {
 
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 15e5d7b5ad625e3e58f9eb9cdaddfbb460989ef2
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,4 +1,4 @@
-import React, { useState, UseEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import Animation from './animation'
 export default class HomeScreen extends React.Component {
@@ -19,7 +19,6 @@ static navigationOptions;
             style={{
               width: '100%',
               height: '30%',
-              // backgroundColor: 'magenta',
             }}
             resizeMode={'contain'}
           />
