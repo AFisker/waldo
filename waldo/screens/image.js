@@ -1,15 +1,13 @@
 import React from 'react';
 import {
   StyleSheet,
-  Style,
   TouchableOpacity,
   View,
   Image,
   Text,
-  KeyboardAvoidingView,
-  Platform,
   AsyncStorage,
 } from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 export default class ShowImage extends React.Component {
   constructor(props) {
@@ -54,7 +52,10 @@ export default class ShowImage extends React.Component {
         <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('camerascreen')}>
           <Image source={require('../assets/down.png')} style={styles.imgbtn1} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2} onPress={() => this.props.navigation.navigate('homescreen')}>
+        <TouchableOpacity style={styles.button2} onPress={() => {
+          Toast.showWithGravity('Bike Location Saved', Toast.LONG, Toast.TOP);
+          this.props.navigation.navigate('homescreen')
+        }}>
           <Image source={require('../assets/up.png')} style={styles.imgbtn2} />
         </TouchableOpacity>
 
