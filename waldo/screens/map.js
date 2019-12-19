@@ -12,7 +12,6 @@ import * as geolib from 'geolib';
 import BikeFound from './bikeFound';
 
 const closeRadius = 10;
-const farRadius   = 20;
 
 export default class MapScreen extends Component {
   state = {
@@ -60,15 +59,7 @@ export default class MapScreen extends Component {
           closeRadius
         ) : null;
 
-        const farAway = hasBikeLocation ? !geolib.isPointWithinRadius(
-          currentPosition.coords,
-          this.state.bikeLocation.coords,
-          farRadius
-        ) : null;
-
-        const showBikeFound = hasBikeLocation && (
-          !farAway && (within)
-        );
+        const showBikeFound = hasBikeLocation && within;
 
         // const showToast = // show toast if
           //  !this.state.showToast // it wasn't shown in previous state
@@ -85,14 +76,12 @@ export default class MapScreen extends Component {
           },
           showBikeFound: showBikeFound,
           // showToast: showToast,
-          isClose: within,
-          isFar: farAway,
           marker: {
             latlng: currentPosition.coords
           },
           error: null,
         });
-        console.log('map:: comparing location (geo fencing)   far=' + (farAway ? 'Y' : 'N') + '   close=' + (within ? 'Y' : 'N') + '    dist=' + distance);
+        console.log('map:: comparing location (geo fencing)   close=' + (within ? 'Y' : 'N') + '    dist=' + distance);
       }
     );
   }
