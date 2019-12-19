@@ -99,7 +99,6 @@ export default class MapScreen extends Component {
   }
 
   componentWillUnmount() {
-    // stop watching for location changes
     if (this.watchId != undefined)
       this.watchId.remove();
   }
