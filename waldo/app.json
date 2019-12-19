@@ -25,6 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Waldo helps users find their parked bikes.",
+    "githubUrl": "https://github.com/AFisker/waldo.git"
   }
 }
